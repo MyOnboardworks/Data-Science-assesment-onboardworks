@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OnboardWorks Data Science Assessment</title>
+<style>
+/* ===== Body & Fonts ===== */
+body {
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
+  background:#1e1f26;
+  color:#f5f5f5;
+  overflow-x:hidden;
+}
+
+/* ===== Header ===== */
+header {
+  text-align:center;
+  padding:25px 20px;
+  border-bottom:2px solid #00d2ff;
+  background: #2b2c37;
+  box-shadow: 0 0 15px rgba(0,210,255,0.3);
+}
+header h1 {
+  margin:0;
+  color:#00d2ff;
+  font-size:32px;
+  letter-spacing: 1px;
+}
+
+/* ===== Progress Bar ===== */
+.progress {
+  position:fixed;
+  top:0; left:0;
+  height:6px;
+  background: linear-gradient(90deg,#00d2ff,#ff8c42);
+  border-radius:3px;
+  width:0%;
+  transition:width 0.3s ease;
+  z-index:1000;
+}
+
+/* ===== Container ===== */
+.container {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:85vh;
+  padding:20px;
+}
+
+/* ===== Card ===== */
+.card {
+  background: #2b2c37;
+  border-radius:18px;
+  padding:35px;
+  max-width:850px;
+  width:100%;
+  box-shadow:0 4px 25px rgba(0,0,0,0.2);
+  animation:fadeIn 0.6s ease-in-out;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+
+/* ===== Titles ===== */
+.lesson-title {
+  font-size:26px;
+  font-weight:bold;
+  margin-bottom:12px;
+  color:#00d2ff;
+}
+.section-title {
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:10px;
+  color:#ff8c42;
+}
+
+/* ===== Content ===== */
+.lesson-content {
+  font-size:17px;
+  color:#f5f5f5;
+  margin-bottom:25px;
+  line-height:1.7;
+  white-space:pre-line;
+}
+
+/* ===== Options ===== */
+.options {display:flex; flex-direction:column; gap:14px; margin-bottom:20px;}
+.option {
+  background:#1e1f26;
+  border:2px solid #00d2ff;
+  color:#00d2ff;
+  padding:14px;
+  cursor:pointer;
+  border-radius:12px;
+  font-size:16px;
+  transition:0.3s all ease;
+  text-align:center;
+  text-transform:uppercase;
+  font-weight:bold;
+}
+.option:hover {
+  background:#00d2ff;
+  color:#1e1f26;
+  transform:translateY(-3px);
+}
+.option.selected {
+  background:#ff8c42;
+  color:#1e1f26;
+  transform:scale(1.05);
+}
+
+/* ===== Navigation Buttons ===== */
+.nav-buttons {display:flex; justify-content:space-between; gap:15px;}
+button {
+  padding:14px 28px;
+  font-size:16px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  background: linear-gradient(90deg,#00d2ff,#ff8c42);
+  color:#1e1f26;
+  font-weight:bold;
+  transition:0.3s all ease;
+  box-shadow:0 4px 15px rgba(0,210,255,0.3);
+}
+button:hover {background: linear-gradient(90deg,#ff8c42,#00d2ff); transform:translateY(-2px);}
+button:disabled {background:#555; cursor:not-allowed; color:#aaa; box-shadow:none;}
+
+/* ===== Code Styling ===== */
+code {background:#1e1f26; padding:2px 5px; border-radius:4px; color:#00d2ff; font-family:monospace;}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<header><h1>OnboardWorks Data Science Assessment</h1></header>
+<div class="container"><div class="card" id="course"></div></div>
+
+<script>
+// =============== COURSE DATA (Sample 5 Lessons) ===============
+const lessons = [
+{ title:"Lesson 1: Introduction to Data Analytics", sections:[
+{ subtitle:"What is Data Analytics?", content:"Data Analytics is the science of analyzing raw data to gain insights.\nExample: Analyze sales data to find top-selling products." },
+{ subtitle:"Importance in Business", content:"Analytics helps companies make data-driven decisions.\nExample: Predict product demand and reduce inventory costs." }
+]},
+{ title:"Lesson 2: Excel Basics", sections:[
+{ subtitle:"Cells & Formulas", content:"Excel organizes data in rows and columns.\nFormula Example: =SUM(A1:A10)" },
+{ subtitle:"Sorting & Filtering", content:"Sort data ascending/descending and filter specific values." }
+]},
+{ title:"Lesson 3: Python Basics", sections:[
+{ subtitle:"Using Pandas", content:"Pandas is for data manipulation.\nExample: import pandas as pd\ndf=pd.read_csv('data.csv')\nprint(df.head())" },
+{ subtitle:"Basic Operations", content:"Select, filter, group, and aggregate data using Pandas." }
+]},
+{ title:"Lesson 4: SQL Basics", sections:[
+{ subtitle:"SELECT Queries", content:"Retrieve data using SELECT.\nExample: SELECT Name, Age FROM Users;" },
+{ subtitle:"WHERE Clause", content:"Filter rows using WHERE.\nExample: SELECT Name FROM Users WHERE Age>25;" }
+]},
+{ title:"Lesson 5: Data Visualization", sections:[
+{ subtitle:"Bar & Line Charts", content:"Visualize trends using charts.\nExample: plt.bar(['A','B'], [10,20])" },
+{ subtitle:"Pie Charts", content:"Show proportions of categories.\nExample: plt.pie([50,50], labels=['Yes','No'])" }
+]}
+];
+
+// ============== QUIZ DATA (Sample 5 Questions) ==============
+const quizData = [
+{ question:"What does CSV stand for?", options:["Comma Separated Values","Core System Variable","Central Source View"], answer:"Comma Separated Values" },
+{ question:"Excel formula to sum range?", options:["=SUM()","=ADD()","=TOTAL()"], answer:"=SUM()" },
+{ question:"Python library for data manipulation?", options:["Pandas","Flask","React"], answer:"Pandas" },
+{ question:"SQL command to retrieve rows?", options:["SELECT","INSERT","UPDATE"], answer:"SELECT" },
+{ question:"Bar chart shows?", options:["Compare categories","Percentages","Database"], answer:"Compare categories" }
+];
+
+// =============== LOGIC =================
+let currentLesson=0, currentSection=0, currentQ=0, score=0;
+const courseEl=document.getElementById("course");
+const progressEl=document.getElementById("progress");
+
+function loadSection(){
+  const lesson=lessons[currentLesson];
+  const section=lesson.sections[currentSection];
+  progressEl.style.width=((currentLesson+currentSection/lesson.sections.length)/(lessons.length+quizData.length))*100 + "%";
+  courseEl.innerHTML=`
+    <div class="lesson-title">${lesson.title}</div>
+    <div class="section-title">${section.subtitle}</div>
+    <div class="lesson-content">${section.content}</div>
+    <div class="nav-buttons">
+      <button id="prevBtn" ${currentLesson===0 && currentSection===0?"disabled":""}>Previous</button>
+      <button id="nextBtn">Next</button>
+    </div>
+  `;
+  document.getElementById("prevBtn").addEventListener("click",()=>{
+    if(currentSection>0){ currentSection--; loadSection(); }
+    else if(currentLesson>0){ currentLesson--; currentSection=lessons[currentLesson].sections.length-1; loadSection(); }
+  });
+  document.getElementById("nextBtn").addEventListener("click",()=>{
+    if(currentSection<lesson.sections.length-1){ currentSection++; loadSection(); }
+    else{ currentLesson++; currentSection=0; if(currentLesson>=lessons.length){ startQuiz(); } else{ loadSection(); } }
+  });
+}
+
+function startQuiz(){ currentQ=0; score=0; loadQuiz(); }
+
+function loadQuiz(){
+  if(currentQ<quizData.length){
+    const q=quizData[currentQ];
+    progressEl.style.width=((lessons.length+currentQ+1)/(lessons.length+quizData.length))*100 + "%";
+    courseEl.innerHTML=`
+      <div class="lesson-title">Question ${currentQ+1} of ${quizData.length}</div>
+      <div class="lesson-content">${q.question}</div>
+      <div class="options">${q.options.map(o=>`<button class="option">${o}</button>`).join("")}</div>
+    `;
+    document.querySelectorAll(".option").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        document.querySelectorAll(".option").forEach(b=>b.classList.remove("selected"));
+        btn.classList.add("selected");
+        if(btn.innerText===q.answer) score++;
+        setTimeout(()=>{currentQ++; loadQuiz();},700);
+      });
+    });
+  } else { finishQuiz(); }
+}
+
+function finishQuiz(){
+  progressEl.style.width="100%";
+  let percent=(score/quizData.length)*100;
+  if(percent>=33){
+    const randNum=Math.floor(10000+Math.random()*90000);
+    courseEl.innerHTML=`<h2 style="color:#00d2ff;">🎉 Passed!</h2><p>Score: ${percent.toFixed(0)}%</p>
+      <p>Redirecting to WhatsApp...</p>`;
+    setTimeout(()=>{window.location.href=`https://wa.me/918091008699?text=completed${randNum}`;},1500);
+  } else {
+    courseEl.innerHTML=`<h2 style="color:#ff8c42;">❌ Failed</h2><p>Score: ${percent.toFixed(0)}%</p>
+      <button onclick="startQuiz()">Retry Quiz</button>`;
+  }
+}
+
+loadSection();
+</script>
+</body>
+</html>
