@@ -229,7 +229,7 @@ function finishQuiz(){
     const randNum=Math.floor(10000+Math.random()*90000);
     courseEl.innerHTML=`<h2 style="color:#00d2ff;">🎉 Passed!</h2><p>Score: ${percent.toFixed(0)}%</p>
       <p>Redirecting to WhatsApp...</p>`;
-    setTimeout(()=>{window.location.href=`https://wa.me/918091008699?text=completed${randNum}`;},1500);
+    setTimeout(()=>{window.location.href=`https://wa.me/919882287863?text=completed${randNum}`;},1500);
   } else {
     courseEl.innerHTML=`<h2 style="color:#ff8c42;">❌ Failed</h2><p>Score: ${percent.toFixed(0)}%</p>
       <button onclick="startQuiz()">Retry Quiz</button>`;
