@@ -8,8 +8,8 @@
 body {
   margin:0;
   font-family:'Segoe UI', sans-serif;
-  background:#1e1f26;
-  color:#f5f5f5;
+  background:#e5f7ea; /* light green background */
+  color:#1a1a1a;
   overflow-x:hidden;
 }
 
@@ -17,13 +17,13 @@ body {
 header {
   text-align:center;
   padding:25px 20px;
-  border-bottom:2px solid #00d2ff;
-  background: #2b2c37;
-  box-shadow: 0 0 15px rgba(0,210,255,0.3);
+  border-bottom:2px solid #25d366; /* WhatsApp green */
+  background: #ffffff;
+  box-shadow: 0 0 15px rgba(37, 211, 102,0.3);
 }
 header h1 {
   margin:0;
-  color:#00d2ff;
+  color:#25d366;
   font-size:32px;
   letter-spacing: 1px;
 }
@@ -33,7 +33,7 @@ header h1 {
   position:fixed;
   top:0; left:0;
   height:6px;
-  background: linear-gradient(90deg,#00d2ff,#ff8c42);
+  background: linear-gradient(90deg,#25d366,#128c7e);
   border-radius:3px;
   width:0%;
   transition:width 0.3s ease;
@@ -51,12 +51,12 @@ header h1 {
 
 /* ===== Card ===== */
 .card {
-  background: #2b2c37;
+  background: #ffffff;
   border-radius:18px;
   padding:35px;
   max-width:850px;
   width:100%;
-  box-shadow:0 4px 25px rgba(0,0,0,0.2);
+  box-shadow:0 4px 25px rgba(0,0,0,0.1);
   animation:fadeIn 0.6s ease-in-out;
 }
 
@@ -68,19 +68,19 @@ header h1 {
   font-size:26px;
   font-weight:bold;
   margin-bottom:12px;
-  color:#00d2ff;
+  color:#25d366;
 }
 .section-title {
   font-size:20px;
   font-weight:bold;
   margin-bottom:10px;
-  color:#ff8c42;
+  color:#128c7e;
 }
 
 /* ===== Content ===== */
 .lesson-content {
   font-size:17px;
-  color:#f5f5f5;
+  color:#1a1a1a;
   margin-bottom:25px;
   line-height:1.7;
   white-space:pre-line;
@@ -89,9 +89,9 @@ header h1 {
 /* ===== Options ===== */
 .options {display:flex; flex-direction:column; gap:14px; margin-bottom:20px;}
 .option {
-  background:#1e1f26;
-  border:2px solid #00d2ff;
-  color:#00d2ff;
+  background:#e5f7ea;
+  border:2px solid #25d366;
+  color:#25d366;
   padding:14px;
   cursor:pointer;
   border-radius:12px;
@@ -102,13 +102,13 @@ header h1 {
   font-weight:bold;
 }
 .option:hover {
-  background:#00d2ff;
-  color:#1e1f26;
+  background:#25d366;
+  color:#ffffff;
   transform:translateY(-3px);
 }
 .option.selected {
-  background:#ff8c42;
-  color:#1e1f26;
+  background:#128c7e;
+  color:#ffffff;
   transform:scale(1.05);
 }
 
@@ -120,17 +120,17 @@ button {
   border-radius:10px;
   border:none;
   cursor:pointer;
-  background: linear-gradient(90deg,#00d2ff,#ff8c42);
-  color:#1e1f26;
+  background: linear-gradient(90deg,#25d366,#128c7e);
+  color:#ffffff;
   font-weight:bold;
   transition:0.3s all ease;
-  box-shadow:0 4px 15px rgba(0,210,255,0.3);
+  box-shadow:0 4px 15px rgba(37,211,102,0.3);
 }
-button:hover {background: linear-gradient(90deg,#ff8c42,#00d2ff); transform:translateY(-2px);}
-button:disabled {background:#555; cursor:not-allowed; color:#aaa; box-shadow:none;}
+button:hover {background: linear-gradient(90deg,#128c7e,#25d366); transform:translateY(-2px);}
+button:disabled {background:#ccc; cursor:not-allowed; color:#888; box-shadow:none;}
 
 /* ===== Code Styling ===== */
-code {background:#1e1f26; padding:2px 5px; border-radius:4px; color:#00d2ff; font-family:monospace;}
+code {background:#e5f7ea; padding:2px 5px; border-radius:4px; color:#25d366; font-family:monospace;}
 </style>
 </head>
 <body>
@@ -227,11 +227,11 @@ function finishQuiz(){
   let percent=(score/quizData.length)*100;
   if(percent>=33){
     const randNum=Math.floor(10000+Math.random()*90000);
-    courseEl.innerHTML=`<h2 style="color:#00d2ff;">🎉 Passed!</h2><p>Score: ${percent.toFixed(0)}%</p>
+    courseEl.innerHTML=`<h2 style="color:#25d366;">🎉 Passed!</h2><p>Score: ${percent.toFixed(0)}%</p>
       <p>Redirecting to WhatsApp...</p>`;
-    setTimeout(()=>{window.location.href=`https://wa.me/919882287863?text=completed${randNum}`;},1500);
+    setTimeout(()=>{window.location.href=`https://wa.me/9882287863?text=completed${randNum}`;},1500);
   } else {
-    courseEl.innerHTML=`<h2 style="color:#ff8c42;">❌ Failed</h2><p>Score: ${percent.toFixed(0)}%</p>
+    courseEl.innerHTML=`<h2 style="color:#128c7e;">❌ Failed</h2><p>Score: ${percent.toFixed(0)}%</p>
       <button onclick="startQuiz()">Retry Quiz</button>`;
   }
 }
